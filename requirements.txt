@@ -1,0 +1,14 @@
+langchain
+langchain-huggingface
+langchain-community
+transformers
+accelerate
+bitsandbytes
+peft
+datasets
+sentence-transformers
+torch
+trl
+pandas
+ipykernel
+unstructured
