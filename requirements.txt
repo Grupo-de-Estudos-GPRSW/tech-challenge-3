@@ -1,15 +1,24 @@
+# Pipeline (notebook example_notebook.ipynb + módulos em src/)
 langchain
-langchain-huggingface
 langchain-community
+langchain-openai
+langchain-huggingface
+langgraph
+faiss-cpu  # no Colab o notebook instala faiss-gpu
 transformers
+huggingface_hub
+torch
+torchao>=0.16.0
 accelerate
+
+# Finetuning (finetuning/)
 bitsandbytes
 peft
 datasets
-sentence-transformers
-torch
 trl
+sentence-transformers
 pandas
-ipykernel
 unstructured
-chromadb
+
+# Notebooks
+ipykernel
