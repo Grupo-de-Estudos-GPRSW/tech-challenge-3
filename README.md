@@ -2,7 +2,7 @@
 
 Este projeto visa ajustar um modelo de IA (finetuning) e construir um pipeline LangChain/LangGraph para criar um chatbot médico para auxiliar médicos.
 
-Para utilizar CUDA, é necessário o torch compilado com suporte a CUDA (uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121)
+Para utilizar CUDA, é necessário o torch compilado com suporte a CUDA (uv pip install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu132)
 
 ## Estrutura
 
