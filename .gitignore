@@ -4,3 +4,4 @@ finetuning/cache
 finetuning/meditron-finetuned
 execution_log
 __pycache__
+.env

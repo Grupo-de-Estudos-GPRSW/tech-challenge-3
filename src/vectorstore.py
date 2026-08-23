@@ -3,8 +3,12 @@ from src.protocols_database import mock_protocols
 from langchain_core.documents import Document
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
+from dotenv import load_dotenv
+import os
 
-OPENAI_API_KEY = "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"
+load_dotenv()
+
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 embeddings = OpenAIEmbeddings(api_key=OPENAI_API_KEY)
 
