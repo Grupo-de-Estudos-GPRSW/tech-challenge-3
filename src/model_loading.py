@@ -1,7 +1,17 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from huggingface_hub import login
+from dotenv import load_dotenv
+import os
 
-login()
+load_dotenv()
+
+# The notebook can use the interactive widget, but the web UI has no TTY: when a token
+# is available in the environment (or in .env), log in with it instead of prompting.
+_hf_token = os.getenv("HF_TOKEN") or os.getenv("HUGGINGFACEHUB_API_TOKEN")
+if _hf_token:
+    login(token=_hf_token)
+else:
+    login()
 
 import torch
 
