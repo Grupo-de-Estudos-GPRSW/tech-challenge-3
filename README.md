@@ -12,6 +12,9 @@ para criar um chatbot médico que auxilia profissionais de saúde. São três pa
 3. **Interface web** (`webapp/` + `run_ui.py`) — um chat que conversa com o modelo ajustado
    através desse mesmo grafo.
 
+A avaliação do modelo e do pipeline está no **[RELATORIO.md](RELATORIO.md)**, gerado a partir
+da suíte de testes em [`eval/`](eval/README.md) (`python run_eval.py`).
+
 ## Início rápido
 
 ```bash
@@ -128,6 +131,20 @@ Face) está documentado em detalhe no **[README do fine tuning](finetuning/READM
 O notebook `finetuning/medical_chatbot_finetuning.ipynb` deve rodar com `finetuning/` como
 diretório de trabalho, pois os caminhos (`MedQuAD`, `./cache`, `./meditron-finetuned`) são
 relativos a ela.
+
+### Avaliação — `run_eval.py` e `eval/`
+
+Suíte que mede o modelo ajustado e o pipeline, com detecção automática de hardware:
+
+```bash
+python run_eval.py --check    # diagnóstico do ambiente, sem executar nada
+python run_eval.py            # as três baterias
+```
+
+São três baterias: `pipeline` (grafo determinístico, sem LLM, segundos), `model` (qualidade
+das respostas do modelo ajustado no MedQuAD) e `e2e` (pipeline completo com o modelo real).
+Os resultados vão para `eval/results/*.json` e embasam o [RELATORIO.md](RELATORIO.md).
+Detalhes de configuração em [`eval/README.md`](eval/README.md).
 
 ### Outros diretórios
 
