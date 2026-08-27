@@ -87,8 +87,35 @@ mostra, em tempo real, por quais nós o pipeline passou.
 python run_ui.py            # http://127.0.0.1:8000
 ```
 
-Opções: `--host`, `--port`, `--no-browser` (não abrir o navegador) e `--reload` (recarregar
-ao alterar o código, útil no desenvolvimento).
+Opções: `--host`, `--port`, `--no-browser` (não abrir o navegador), `--reload` (recarregar ao
+alterar o código, útil no desenvolvimento) e `--quantization`.
+
+#### Escolhendo como o modelo é carregado
+
+O modelo tem 7 bilhões de parâmetros, e quanto de VRAM ele ocupa é decisão de quem executa a
+aplicação:
+
+| Modo | VRAM | Quando usar |
+| --- | --- | --- |
+| `4bit` | ~4 GB | GPUs de 6–8 GB. Usa `nf4`, a mesma configuração do treino. |
+| `8bit` | ~7 GB | GPUs intermediárias, meio-termo entre memória e fidelidade. |
+| `none` | ~13,5 GB | fp16, sem quantização — para GPUs de 16 GB ou mais. |
+| `auto` | — | **Padrão**: escolhe `none` a partir de 16 GB de VRAM, senão `4bit`. |
+
+```bash
+python run_ui.py --quantization 4bit     # tem precedência sobre o .env
+```
+
+Ou fixe no `.env`, para valer também no notebook e em qualquer script que importe
+`src/model_loading.py`:
+
+```
+MODEL_QUANTIZATION=4bit
+```
+
+> Em fp16 numa GPU pequena o modelo chega a "carregar" — o driver transborda para a memória
+> compartilhada — e só falha com *out of memory* ao gerar a primeira resposta. É por isso que
+> o padrão é `auto` em vez de fp16.
 
 | Módulo | Conteúdo |
 | --- | --- |
@@ -177,6 +204,8 @@ pip install -r requirements.txt
   embeddings dos protocolos.
 - **Token do Hugging Face**: `HF_TOKEN` no `.env` para login não interativo — obrigatório ao
   rodar a interface web, opcional no notebook.
+- **Quantização** (opcional): `MODEL_QUANTIZATION` no `.env` (`auto`, `4bit`, `8bit` ou
+  `none`) define quanta VRAM o modelo ocupa; ver a tabela na seção da interface web.
 - **FAISS**: `requirements.txt` traz `faiss-cpu`, que tem wheels para Windows; o notebook
   instala `faiss-gpu`, adequado ao ambiente do Colab.
 - **GPU**: opcional para o pipeline (o modelo roda em CPU, porém lentamente) e praticamente
