@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>GPRSW · Medical Assistant</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/styles.css"/>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <img class="brand-mark" src="/static/logo.svg" alt=""/>
+        <div class="brand-text">
+          <span class="brand-name">Grupo&#8209;de&#8209;Estudos&#8209;GPRSW</span>
+          <span class="brand-sub">Medical Assistant · LangGraph pipeline</span>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <span id="status-pill" class="pill pill-loading">
+          <span class="dot"></span><span id="status-text">Starting…</span>
+        </span>
+        <button id="new-chat" class="ghost-btn" type="button" title="Start a new conversation">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+          New chat
+        </button>
+      </div>
+    </header>
+
+    <main id="chat" class="chat">
+      <section id="welcome" class="welcome">
+        <img class="welcome-mark" src="/static/logo.svg" alt="Grupo-de-Estudos-GPRSW logo"/>
+        <h1>How can I support your clinical decision?</h1>
+        <p>
+          Ask about a patient by identifier (<code>P001</code>–<code>P010</code>). Every answer is grounded on the
+          patient record and the internal clinical protocols, then checked by the safety guardrail.
+        </p>
+        <div class="suggestions">
+          <button class="suggestion" type="button">What is the recommended treatment for P001's diabetes?</button>
+          <button class="suggestion" type="button">Summarize the pending tests for P003.</button>
+          <button class="suggestion" type="button">Which protocol applies to P002's asthma?</button>
+          <button class="suggestion" type="button">What follow-up does P010 need?</button>
+        </div>
+      </section>
+      <div id="messages" class="messages"></div>
+    </main>
+
+    <footer class="composer-wrap">
+      <form id="composer" class="composer" autocomplete="off">
+        <textarea id="input" class="input" rows="1" placeholder="Ask about a patient… (e.g. P001)"></textarea>
+        <button id="send" class="send-btn" type="submit" title="Send" disabled>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </form>
+      <p class="disclaimer">
+        Educational prototype. Responses are model-generated and must be validated by a licensed physician.
+      </p>
+    </footer>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

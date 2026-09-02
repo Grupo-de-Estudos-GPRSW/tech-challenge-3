@@ -21,5 +21,9 @@ sentence-transformers
 pandas
 unstructured
 
+# Interface web (webapp/ + run_ui.py)
+fastapi
+uvicorn[standard]
+
 # Notebooks
 ipykernel

@@ -1,0 +1,95 @@
+{
+  "seed": 74,
+  "n": 10,
+  "com_clinicas": true,
+  "itens": [
+    {
+      "id": "medquad-1",
+      "fonte": "1_CancerGov_QA",
+      "pergunta": "What are the stages of Pituitary Tumors ?",
+      "resposta_referencia": "Key Points\n                    - Once a pituitary tumor has been diagnosed, tests are done to find out if it has spread within the central nervous system (brain and spinal cord) or to other parts of the body.     - Pituitary tumors are described in several ways.\n                \n                \n                    Once a pituitary tumor has been diagnosed, tests are done to find out if it has spread within the central nervous system (brain and spinal cord) or to other parts of the body.\n                    The extent or spread of cancer is usually described as stages. There is no standard staging system for pituitary tumors. Once a pituitary tumor is found, tests are done to find out if the tumor has spread into the brain or to other parts of the body. The following test may be used:          -   MRI (magnetic resonance imaging): A procedure that uses a magnet, radio waves, and a computer to make a series of detailed pictures of areas inside the body. This procedure is also called nuclear magnetic resonance imaging (NMRI).\n                \n                \n                    Pituitary tumors are described in several ways.\n                    Pituitary tumors are described by their size and grade, whether or not they make extra hormones, and whether the tumor has spread to other parts of the body.   The following sizes are used:         - Microadenoma: The tumor is smaller than 1 centimeter.    - Macroadenoma: The tumor is 1 centimeter or larger.        Most pituitary adenomas are microadenomas.    The grade of a pituitary tumor is based on how far it has grown into the surrounding area of the brain, including the sella (the bone at the base of the skull, where the pituitary gland sits).",
+      "qtype": "stages"
+    },
+    {
+      "id": "medquad-2",
+      "fonte": "2_GARD_QA",
+      "pergunta": "What are the symptoms of Deafness enamel hypoplasia nail defects ?",
+      "resposta_referencia": "What are the signs and symptoms of Deafness enamel hypoplasia nail defects? The Human Phenotype Ontology provides the following list of signs and symptoms for Deafness enamel hypoplasia nail defects. If the information is available, the table below includes how often the symptom is seen in people with this condition. You can use the MedlinePlus Medical Dictionary to look up the definitions for these medical terms. Signs and Symptoms Approximate number of patients (when available) Abnormal hair quantity 90% Abnormality of dental enamel 90% Abnormality of nail color 90% Abnormality of the eye 90% Abnormality of the fingernails 90% Abnormality of the toenails 90% Aplasia/Hypoplasia of the eyebrow 90% Cognitive impairment 90% Diabetes mellitus 90% Pili torti 90% Sensorineural hearing impairment 90% Taurodontia 90% Arrhythmia 50% Large hands 50% Primary amenorrhea 50% Round face 50% Short stature 50% Acanthosis nigricans 7.5% Camptodactyly of finger 7.5% Cerebral calcification 7.5% Delayed skeletal maturation 7.5% High anterior hairline 7.5% Ichthyosis 7.5% Muscle weakness 7.5% Peripheral neuropathy 7.5% Macular dystrophy 5% Amelogenesis imperfecta - Autosomal recessive inheritance - Hypoplasia of dental enamel - Leukonychia - The Human Phenotype Ontology (HPO) has collected information on how often a sign or symptom occurs in a condition. Much of this information comes from Orphanet, a European rare disease database. The frequency of a sign or symptom is usually listed as a rough estimate of the percentage of patients who have that feature. The frequency may also be listed as a fraction. The first number of the fraction is how many people had the symptom, and the second number is the total number of people who were examined in one study. For example, a frequency of 25/25 means that in a study of 25 people all patients were found to have that symptom. Because these frequencies are based on a specific study, the fractions may be different if another group of patients are examined. Sometimes, no information on frequency is available. In these cases, the sign or symptom may be rare or common.",
+      "qtype": "symptoms"
+    },
+    {
+      "id": "medquad-3",
+      "fonte": "3_GHR_QA",
+      "pergunta": "Is mitochondrial complex III deficiency inherited ?",
+      "resposta_referencia": "Mitochondrial complex III deficiency is usually inherited in an autosomal recessive pattern, which means both copies of the gene in each cell have mutations. The parents of an individual with an autosomal recessive condition each carry one copy of the mutated gene, but they typically do not show signs and symptoms of the condition.  In some cases caused by mutations in the MT-CYB gene, the condition is not inherited; it is caused by new mutations in the gene that occur in people with no history of the condition in their family. Other cases caused by mutations in the MT-CYB gene are inherited in a mitochondrial pattern, which is also known as maternal inheritance. This pattern of inheritance applies to genes contained in mtDNA. Because egg cells, but not sperm cells, contribute mitochondria to the developing embryo, children can only inherit disorders resulting from mtDNA mutations from their mother. These disorders can appear in every generation of a family and can affect both males and females, but fathers do not pass traits associated with changes in mtDNA to their children.",
+      "qtype": "inheritance"
+    },
+    {
+      "id": "medquad-4",
+      "fonte": "4_MPlus_Health_Topics_QA",
+      "pergunta": "Do you have information about Calcium",
+      "resposta_referencia": "Summary : You have more calcium in your body than any other mineral. Calcium has many important jobs. The body stores more than 99 percent of its calcium in the bones and teeth to help make and keep them strong. The rest is throughout the body in blood, muscle and the fluid between cells. Your body needs calcium to help muscles and blood vessels contract and expand, to secrete hormones and enzymes and to send messages through the nervous system.     It is important to get plenty of calcium in the foods you eat. Foods rich in calcium include       - Dairy products such as milk, cheese, and yogurt    - Leafy, green vegetables    - Fish with soft bones that you eat, such as canned sardines and salmon    - Calcium-enriched foods such as breakfast cereals, fruit juices, soy and rice drinks, and tofu. Check the product labels.       The exact amount of calcium you need depends on your age and other factors. Growing children and teenagers need more calcium than young adults. Older women need plenty of calcium to prevent osteoporosis. People who do not eat enough high-calcium foods should take a calcium supplement.    NIH: National Institutes of Health Office of Dietary Supplements",
+      "qtype": "information"
+    },
+    {
+      "id": "medquad-5",
+      "fonte": "5_NIDDK_QA",
+      "pergunta": "What is (are) Cushing's Syndrome ?",
+      "resposta_referencia": "Cushing's syndrome is a hormonal disorder caused by prolonged exposure of the body's tissues to high levels of the hormone cortisol. Sometimes called hypercortisolism, Cushing's syndrome is relatively rare and most commonly affects adults aged 20 to 50. People who are obese and have type 2 diabetes, along with poorly controlled blood glucose-also called blood sugar-and high blood pressure, have an increased risk of developing the disorder.",
+      "qtype": "information"
+    },
+    {
+      "id": "medquad-6",
+      "fonte": "6_NINDS_QA",
+      "pergunta": "What are the treatments for Cerebral Hypoxia ?",
+      "resposta_referencia": "Treatment depends on the underlying cause of the hypoxia, but basic life-support systems have to be put in place: mechanical ventilation to secure the airway; fluids, blood products, or medications to support blood pressure and heart rate; and medications to suppress seizures.",
+      "qtype": "treatment"
+    },
+    {
+      "id": "medquad-7",
+      "fonte": "7_SeniorHealth_QA",
+      "pergunta": "What is (are) Gum (Periodontal) Disease ?",
+      "resposta_referencia": "An Infection of the Gums and Surrounding Tissues Gum (periodontal) disease is an infection of the gums and surrounding tissues that hold teeth in place. The two forms of gum disease are gingivitis, a mild form that is reversible with good oral hygiene, and periodontitis, a more severe form that can damage the soft tissues and bone that support teeth. If left untreated, periodontitis can lead to tooth loss. In its early stages, gum disease is usually painless, and many people are not aware that they have it. In more advanced cases, gum disease can cause sore gums and pain when chewing. Not A Normal Part of Aging The good news is that gum disease can be prevented. It does not have to be a part of growing older. With thorough brushing and flossing and regular professional cleanings by your dentist, you can reduce your risk of developing gum disease as you age. If you have been treated for gum disease, sticking to a proper oral hygiene routine and visiting your dentist for regular cleanings can minimize the chances that it will come back. Plaque Buildup Can Form Tartar Gum disease is typically caused by poor brushing and flossing habits that allow dental plaque -- a sticky film of bacteria -- to build up on the teeth. Plaque that is not removed can harden and form tartar that brushing doesn't clean. Only a professional cleaning by a dentist or dental hygienist can remove tartar. Gum disease can range from simple gum inflammation to serious disease. The two forms of gum disease are gingivitis and periodontitis. Gingivitis and Periodontitis In gingivitis, the gums become red, swollen and can bleed easily. Gingivitis can usually be reversed with daily brushing and flossing, and regular cleaning by a dentist or dental hygienist. This form of gum disease does not include any loss of bone and tissue that hold teeth in place. When gingivitis is not treated, it can advance to periodontitis. In periodontitis, gums pull away from the teeth and form spaces (called \"pockets\") that become infected. The body's immune system fights the bacteria as the plaque spreads and grows below the gum line. Bacterial toxins and the body's natural response to infection start to break down the bone and connective tissue that hold teeth in place. If not treated, the bones, gums, and tissue that support the teeth are destroyed. The teeth may eventually become loose and may have to be removed.",
+      "qtype": "information"
+    },
+    {
+      "id": "medquad-8",
+      "fonte": "8_NHLBI_QA_XML",
+      "pergunta": "What is (are) Electrocardiogram ?",
+      "resposta_referencia": "An electrocardiogram (e-lek-tro-KAR-de-o-gram), also called an EKG or ECG, is a simple, painless test that records the heart's electrical activity. To understand this test, it helps to understand how the heart works.\n                \nWith each heartbeat, an electrical signal spreads from the top of the heart to the bottom. As it travels, the signal causes the heart to contract and pump blood. The process repeats with each new heartbeat.\n                \nThe heart's electrical signals set the rhythm of the heartbeat. For more detailed information and animations, go to the Health Topics How the Heart Works article.\n                \nAn EKG shows:\n                \nHow fast your heart is beating\n                \nWhether the rhythm of your heartbeat is steady or irregular\n                \nThe strength and timing of electrical signals as they pass through each part of your heart\n                \nDoctors use EKGs to detect and study many heart problems, such as heart attacks, arrhythmias (ah-RITH-me-ahs), and heart failure. The test's results also can suggest other disorders that affect heart function.",
+      "qtype": "information"
+    },
+    {
+      "id": "medquad-9",
+      "fonte": "9_CDC_QA",
+      "pergunta": "How to prevent Varicella (Chickenpox) Vaccination ?",
+      "resposta_referencia": "At a Glance \n \nVaccine-preventable disease levels are at or near record lows. Even though most infants and toddlers have received all recommended vaccines by age 2, many under-immunized children remain, leaving the potential for outbreaks of disease. Many adolescents and adults are under-immunized as well, missing opportunities to protect themselves against diseases such as Hepatitis B, influenza, and pneumococcal disease. CDC works closely with public health agencies and private partners to improve and sustain immunization coverage and to monitor the safety of vaccines so that this public health success story can be maintained and expanded in the century to come.  \n  \n Vaccine Shortages & Delays \n  \n   \n   \n \n   \n  \n  \n   \n   \nThe latest national information about vaccine supplies and guidance for healthcare providers who are facing vaccine shortages or delays \n     \n    \n   \n  \n  \n \n  \n  \n  \n Potential New Vaccines \n  \n   \n   \n \n   \n  \n  \n   \n   \nResources for finding information on potential vaccines, research and development status, licensure status, etc. \n       \n    \n   \n  \n  \n \n  \n  \n  \n Vaccines: The Basics \n  \n   \n   \n \n   \n  \n  \n   \n   \nWithout vaccines, epidemics of many preventable diseases could return, resulting in increased – and unnecessary – illness, disability, and death. \n          \n    \n   \n  \n  \n \n  \n  \n  \n FAQ about Vaccines & Diseases they Prevent \n  \n   \n   \n \n   \n  \n  \n   \n          \n    \n   \n  \n  \n \n  \n  \n   \n  \n                \n \n                \n \n \n \n                \n  \n \n  \n  \nImages and logos on this website which are trademarked/copyrighted or used with permission of the trademark/copyright or logo holder are not in the public domain. These images and logos have been licensed for or used with permission in the materials provided on this website. The materials in the form presented on this website may be used without seeking further permission. Any other use of trademarked/copyrighted images or logos requires permission from the trademark/copyright holder...more \n  \n  \n  \n  This graphic notice means that you are leaving an HHS Web site. For more information, please see the Exit Notification and Disclaimer policy.",
+      "qtype": "prevention"
+    },
+    {
+      "id": "medquad-10",
+      "fonte": "1_CancerGov_QA",
+      "pergunta": "How to diagnose Colon Cancer ?",
+      "resposta_referencia": "Tests that examine the colon and rectum are used to detect (find) and diagnose colon cancer. The following tests and procedures may be used:         -   Physical exam and history : An exam of the body to check general signs of health, including checking for signs of disease, such as lumps or anything else that seems unusual. A history of the patients health habits and past illnesses and treatments will also be taken.    -   Digital rectal exam : An exam of the rectum. The doctor or nurse inserts a lubricated, gloved finger into the rectum to feel for lumps or anything else that seems unusual.    -   Fecal occult blood test (FOBT): A test to check stool (solid waste) for blood that can only be seen with a microscope. A small sample of stool is placed on a special card or in a special container and returned to the doctor or laboratory for testing. Blood in the stool may be a sign of polyps, cancer, or other conditions. There are two types of FOBTs:               -  Guaiac FOBT : The sample of stool on the special card is tested with a chemical. If there is blood in the stool, the special card changes color.      -  Immunochemical FOBT : A liquid is added to the stool sample. This mixture is injected into a machine that contains antibodies that can detect blood in the stool. If there is blood in the stool, a line appears in a window in the machine. This test is also called fecal immunochemical test or FIT.             -   Barium enema : A series of x-rays of the lower gastrointestinal tract. A liquid that contains barium (a silver-white metallic compound) is put into the rectum. The barium coats the lower gastrointestinal tract and x-rays are taken. This procedure is also called a lower GI series.    -   Sigmoidoscopy : A procedure to look inside the rectum and sigmoid (lower) colon for polyps (small areas of bulging tissue), other abnormal areas, or cancer. A sigmoidoscope is inserted through the rectum into the sigmoid colon. A sigmoidoscope is a thin, tube-like instrument with a light and a lens for viewing. It may also have a tool to remove polyps or tissue samples, which are checked under a microscope for signs of cancer.    -   Colonoscopy : A procedure to look inside the rectum and colon for polyps, abnormal areas, or cancer. A colonoscope is inserted through the rectum into the colon. A colonoscope is a thin, tube-like instrument with a light and a lens for viewing. It may also have a tool to remove polyps or tissue samples, which are checked under a microscope for signs of cancer.    -   Virtual colonoscopy : A procedure that uses a series of x-rays called computed tomography to make a series of pictures of the colon. A computer puts the pictures together to create detailed images that may show polyps and anything else that seems unusual on the inside surface of the colon. This test is also called colonography or CT colonography.     -   Biopsy : The removal of cells or tissues so they can be viewed under a microscope by a pathologist to check for signs of cancer.",
+      "qtype": "exams and tests"
+    },
+    {
+      "id": "clinico-1",
+      "fonte": "pipeline",
+      "pergunta": "What is the recommended treatment for a patient with Type 2 Diabetes already taking Metformin and Lisinopril?",
+      "resposta_referencia": ""
+    },
+    {
+      "id": "clinico-2",
+      "fonte": "pipeline",
+      "pergunta": "A patient with coronary artery disease is on Aspirin and Atorvastatin and has a pending stress test. Should I prescribe a new medication?",
+      "resposta_referencia": ""
+    },
+    {
+      "id": "clinico-3",
+      "fonte": "pipeline",
+      "pergunta": "What follow-up is recommended after pneumonia has resolved?",
+      "resposta_referencia": ""
+    }
+  ]
+}

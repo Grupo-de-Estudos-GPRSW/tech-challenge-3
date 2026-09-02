@@ -8,6 +8,6 @@ def retrieve_protocols(state: GraphState) -> GraphState:
     # Guardamos apenas texto e metadados necessários
 
     retrieved_docs = []
-    [retrieved_docs.append(f"Protocol ID: {d.metadata.get("protocol_id", "")}, Title: {d.metadata.get("protocol_title", "")}\nContent: {d.page_content}") for d in hits]
+    [retrieved_docs.append(f"Protocol ID: {d.metadata.get('protocol_id', '')}, Title: {d.metadata.get('protocol_title', '')}\nContent: {d.page_content}") for d in hits]
 
     return {"retrieved_docs": retrieved_docs}
