@@ -120,7 +120,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser.add_argument("--samples", type=int)
     parser.add_argument("--max-new-tokens", type=int, dest="max_new_tokens")
     parser.add_argument("--device", choices=("auto", "cuda", "cpu"))
-    parser.add_argument("--quantization", choices=("auto", "4bit", "8bit", "none"))
+    parser.add_argument("--quantization", choices=("4bit", "8bit", "none"))
     args = parser.parse_args(argv)
 
     if args.effective_config:

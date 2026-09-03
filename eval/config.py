@@ -29,9 +29,19 @@ ROOT = Path(__file__).resolve().parent.parent
 CONFIG_FILE = ROOT / "eval" / "eval_config.json"
 
 DEVICE_CHOICES = ("auto", "cuda", "cpu")
-QUANTIZATION_CHOICES = ("auto", "4bit", "8bit", "none")
+QUANTIZATION_CHOICES = ("4bit", "8bit", "none")
 RETRIEVER_CHOICES = ("auto", "openai", "local")
 BATTERY_CHOICES = ("model", "pipeline", "e2e")
+
+QUANTIZATION_HELP = (
+    "A quantização é obrigatória e não tem padrão. Escolha uma de "
+    f"{', '.join(QUANTIZATION_CHOICES)}:\n"
+    "  4bit  ~4 GB de VRAM (nf4, a mesma configuração do treino)\n"
+    "  8bit  ~7 GB de VRAM\n"
+    "  none  fp16, ~13,5 GB de VRAM\n"
+    "Defina por `--quantization`, por EVAL_QUANTIZATION no ambiente/.env "
+    'ou pela chave "quantization" em eval/eval_config.json.'
+)
 
 
 @dataclass
@@ -43,7 +53,7 @@ class EvalConfig:
     base_model_id: str = "epfl-llm/meditron-7B"
     cache_dir: Optional[str] = None          # None -> finetuning/cache se existir, senão cache padrão do HF
     device: str = "auto"
-    quantization: str = "auto"
+    quantization: str = ""                    # obrigatório: sem padrão, quem roda escolhe
 
     # geração
     samples: int = 10
@@ -134,8 +144,13 @@ def load_config(cli_overrides: Optional[Dict[str, Any]] = None) -> EvalConfig:
 def validate(config: EvalConfig) -> None:
     if config.device not in DEVICE_CHOICES:
         raise ValueError(f"device deve ser um de {DEVICE_CHOICES}, veio '{config.device}'")
+    if not config.quantization:
+        raise ValueError("quantization não definido.\n" + QUANTIZATION_HELP)
     if config.quantization not in QUANTIZATION_CHOICES:
-        raise ValueError(f"quantization deve ser um de {QUANTIZATION_CHOICES}, veio '{config.quantization}'")
+        raise ValueError(
+            f"quantization deve ser um de {QUANTIZATION_CHOICES}, veio "
+            f"'{config.quantization}'.\n" + QUANTIZATION_HELP
+        )
     if config.retriever not in RETRIEVER_CHOICES:
         raise ValueError(f"retriever deve ser um de {RETRIEVER_CHOICES}, veio '{config.retriever}'")
     for battery in config.batteries:
@@ -192,22 +207,20 @@ def resolve_device(config: EvalConfig, hw: Optional[Dict[str, Any]] = None) -> s
 
 
 def resolve_quantization(config: EvalConfig, device: str, hw: Optional[Dict[str, Any]] = None) -> str:
-    """Escolhe a quantização adequada ao hardware quando o modo é `auto`.
+    """Devolve a quantização escolhida, rebaixando-a apenas quando é impossível aplicá-la.
 
-    O modelo tem 7B de parâmetros: ~13,5 GB em fp16 e ~4 GB em 4-bit. Em GPU pequena
-    a quantização 4-bit (a mesma usada no treino) é o único caminho viável.
+    Não há escolha automática: `config.quantization` é obrigatório e já foi validado.
+    As duas exceções abaixo não são preferência, são impossibilidade — o bitsandbytes
+    precisa de GPU e precisa estar instalado. Quem chama registra o rebaixamento.
     """
     hw = hw or hardware_info()
-    if config.quantization != "auto":
-        return config.quantization
+    if config.quantization == "none":
+        return "none"
     if device != "cuda":
         return "none"                      # bitsandbytes exige GPU
-    vram = hw.get("vram_gb") or 0
-    if vram >= 16:
-        return "none"                      # cabe em fp16 sem quantizar
     if not hw.get("bitsandbytes"):
         return "none"                      # sem bitsandbytes não há como quantizar
-    return "4bit"
+    return config.quantization
 
 
 def openai_key_available() -> bool:

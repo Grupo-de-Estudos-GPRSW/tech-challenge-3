@@ -236,7 +236,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser.add_argument("--effective-config", help="JSON de configuração já resolvida")
     parser.add_argument("--retriever", choices=("auto", "openai", "local"))
     parser.add_argument("--device", choices=("auto", "cuda", "cpu"))
-    parser.add_argument("--quantization", choices=("auto", "4bit", "8bit", "none"))
+    parser.add_argument("--quantization", choices=("4bit", "8bit", "none"))
     parser.add_argument("--max-new-tokens", type=int, dest="max_new_tokens")
     args = parser.parse_args(argv)
 

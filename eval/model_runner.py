@@ -2,9 +2,9 @@
 
 O repositório publicado (`Grupo-de-Estudos-GPRSW/meditron-7b-finetuned-MedQuAD`) contém
 apenas o **adapter LoRA** (~17 MB); os pesos vêm do modelo base `epfl-llm/meditron-7B`.
-Este módulo carrega o base com a quantização adequada à GPU disponível — a mesma
-`BitsAndBytesConfig` usada no treino (`finetuning/foundation_model.py`) — e aplica o
-adapter por cima.
+Este módulo carrega o base com a quantização escolhida por quem executa a suíte — em
+4-bit, a mesma `BitsAndBytesConfig` usada no treino (`finetuning/foundation_model.py`)
+— e aplica o adapter por cima. Não há escolha automática: a configuração é obrigatória.
 
 Toda degradação (queda de quantização, redução de tokens, ida para CPU) é registrada
 em `self.notes` e vai para o JSON de resultados.
@@ -81,8 +81,12 @@ class ModelRunner:
         self.device = resolve_device(self.config, hw)
         self.quantization = resolve_quantization(self.config, self.device, hw)
 
-        if self.config.quantization == "auto":
-            self.notes.append(f"quantizacao escolhida automaticamente: {self.quantization}")
+        if self.quantization != self.config.quantization:
+            motivo = "sem GPU" if self.device != "cuda" else "bitsandbytes ausente"
+            self.notes.append(
+                f"quantizacao '{self.config.quantization}' rebaixada para "
+                f"'{self.quantization}': {motivo}"
+            )
         if self.device == "cpu":
             self.notes.append("rodando em CPU: a geração é bem mais lenta")
 

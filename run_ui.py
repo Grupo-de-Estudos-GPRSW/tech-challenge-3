@@ -1,11 +1,14 @@
 """Entry point for the chat interface.
 
-    python run_ui.py [--host 127.0.0.1] [--port 8000] [--no-browser]
-                     [--quantization auto|4bit|8bit|none]
+    python run_ui.py --quantization 4bit|8bit|none
+                     [--host 127.0.0.1] [--port 8000] [--no-browser]
 
 Serves the web UI on http://127.0.0.1:8000 and loads the LangGraph pipeline
 (`src/graph.py`) in the background, so the page is usable while the fine-tuned
 model is still being downloaded/loaded.
+
+The quantization mode is required: pass `--quantization` or set
+MODEL_QUANTIZATION in the environment or `.env`.
 """
 
 from __future__ import annotations
@@ -16,7 +19,7 @@ import sys
 import threading
 import webbrowser
 
-QUANTIZATION_CHOICES = ("auto", "4bit", "8bit", "none")
+QUANTIZATION_CHOICES = ("4bit", "8bit", "none")
 
 
 def main() -> int:
@@ -27,17 +30,45 @@ def main() -> int:
     parser.add_argument("--reload", action="store_true", help="Auto-reload on code changes (development).")
     parser.add_argument(
         "--quantization", choices=QUANTIZATION_CHOICES,
-        help="How to load the fine-tuned model: 4bit (~4 GB of VRAM), 8bit (~7 GB), "
-             "none (fp16, ~13.5 GB) or auto (default: picks by the VRAM of your GPU). "
-             "Overrides MODEL_QUANTIZATION from the environment or .env.",
+        help="Required. How to load the fine-tuned model: 4bit (~4 GB of VRAM), "
+             "8bit (~7 GB) or none (fp16, ~13.5 GB). May also be set as "
+             "MODEL_QUANTIZATION in the environment or .env; the flag wins.",
     )
     args = parser.parse_args()
 
-    # Precedência: flag > variável de ambiente / .env > padrão ('auto').
-    # Precisa valer antes de src.model_loading ser importado, o que só
+    # O `.env` precisa estar carregado antes da checagem abaixo: sem isso, quem define
+    # MODEL_QUANTIZATION apenas no arquivo seria barrado como se não tivesse escolhido.
+    try:
+        from dotenv import load_dotenv
+
+        load_dotenv()
+    except ModuleNotFoundError:
+        pass
+
+    # Precedência: flag > variável de ambiente / .env. Não há padrão: a escolha é
+    # obrigatória. Precisa valer antes de src.model_loading ser importado, o que só
     # acontece na thread de carga iniciada pelo servidor.
     if args.quantization:
         os.environ["MODEL_QUANTIZATION"] = args.quantization
+
+    quantization = os.getenv("MODEL_QUANTIZATION", "").strip().lower()
+    if not quantization:
+        print(
+            "Choose how to load the model: pass --quantization "
+            f"{{{'|'.join(QUANTIZATION_CHOICES)}}} or set MODEL_QUANTIZATION in your .env.\n"
+            "  4bit  ~4 GB of VRAM (nf4, the same setup used for training)\n"
+            "  8bit  ~7 GB of VRAM\n"
+            "  none  fp16, ~13.5 GB of VRAM",
+            file=sys.stderr,
+        )
+        return 2
+    if quantization not in QUANTIZATION_CHOICES:
+        print(
+            f"Invalid MODEL_QUANTIZATION: '{quantization}'. "
+            f"Use one of {', '.join(QUANTIZATION_CHOICES)}.",
+            file=sys.stderr,
+        )
+        return 2
 
     try:
         import uvicorn
@@ -50,7 +81,6 @@ def main() -> int:
         return 1
 
     url = f"http://{'127.0.0.1' if args.host in ('0.0.0.0', '::') else args.host}:{args.port}"
-    quantization = os.getenv("MODEL_QUANTIZATION", "auto")
     print(f"\n  Grupo-de-Estudos-GPRSW · Medical Assistant\n  {url}"
           f"\n  model quantization: {quantization}\n")
 

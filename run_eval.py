@@ -1,10 +1,14 @@
 """Suíte de avaliação do chatbot médico — ponto de entrada único.
 
-    python run_eval.py                  # roda tudo, adaptando-se ao hardware
-    python run_eval.py --check          # só o diagnóstico do ambiente
-    python run_eval.py --quick          # amostra pequena, para validar o caminho
-    python run_eval.py --only pipeline  # escolhe as baterias
-    python run_eval.py --samples 25 --device cpu --quantization none
+    python run_eval.py --quantization 4bit                  # roda tudo
+    python run_eval.py --quantization 4bit --check          # só o diagnóstico do ambiente
+    python run_eval.py --quantization 4bit --quick          # amostra pequena, valida o caminho
+    python run_eval.py --quantization 4bit --only pipeline  # escolhe as baterias
+    python run_eval.py --quantization none --samples 25 --device cpu
+
+A quantização é obrigatória (`4bit`, `8bit` ou `none`) e pode vir da flag, de
+EVAL_QUANTIZATION no ambiente/.env ou de `eval/eval_config.json`. Tudo o mais
+continua se adaptando ao hardware.
 
 Cada bateria roda em um subprocesso isolado: uma falha de memória ou de importação
 em uma delas não derruba as demais, e cada uma pode ser executada sozinha
@@ -47,6 +51,10 @@ def diagnosticar(config: EvalConfig) -> Dict[str, Any]:
     retriever = resolve_retriever(config)
 
     avisos: List[str] = []
+    if quantization != config.quantization:
+        motivo = "sem GPU" if device != "cuda" else "bitsandbytes ausente"
+        avisos.append(f"quantização '{config.quantization}' não é aplicável ({motivo}): "
+                      f"a suíte vai rodar com '{quantization}'")
     if not hw["cuda_disponivel"]:
         avisos.append("sem GPU: as baterias 'model' e 'e2e' vão rodar em CPU e podem levar horas")
     elif quantization == "none" and (hw.get("vram_gb") or 0) < 16:
@@ -151,7 +159,7 @@ def main(argv: List[str] | None = None) -> int:
     parser.add_argument("--samples", type=int, help="perguntas do MedQuAD na bateria 'model'")
     parser.add_argument("--max-new-tokens", type=int, dest="max_new_tokens")
     parser.add_argument("--device", choices=("auto", "cuda", "cpu"))
-    parser.add_argument("--quantization", choices=("auto", "4bit", "8bit", "none"))
+    parser.add_argument("--quantization", choices=("4bit", "8bit", "none"))
     parser.add_argument("--retriever", choices=("auto", "openai", "local"))
     parser.add_argument("--seed", type=int)
     parser.add_argument("--output-dir", dest="output_dir")

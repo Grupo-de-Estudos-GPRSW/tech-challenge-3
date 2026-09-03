@@ -5,10 +5,13 @@ reexecutada em máquinas diferentes sem edição de código: o hardware é detec
 configuração vem em camadas.
 
 ```bash
-python run_eval.py            # roda tudo, adaptando-se ao hardware
-python run_eval.py --check    # só o diagnóstico do ambiente, não executa nada
-python run_eval.py --quick    # 3 perguntas e 128 tokens, para validar o caminho
+python run_eval.py --quantization 4bit           # roda tudo, adaptando-se ao hardware
+python run_eval.py --quantization 4bit --check   # só o diagnóstico, não executa nada
+python run_eval.py --quantization 4bit --quick   # 3 perguntas e 128 tokens, valida o caminho
 ```
+
+A quantização é obrigatória e não tem padrão — `4bit`, `8bit` ou `none`. Todo o resto
+continua se adaptando ao hardware.
 
 O resultado final fica em `eval/results/*.json` e alimenta o [RELATORIO.md](../RELATORIO.md).
 
@@ -23,8 +26,8 @@ O resultado final fica em `eval/results/*.json` e alimenta o [RELATORIO.md](../R
 Rodar uma bateria isolada:
 
 ```bash
-python run_eval.py --only pipeline
-python -m eval.battery_model --samples 5      # também funciona sozinha
+python run_eval.py --quantization 4bit --only pipeline
+python -m eval.battery_model --quantization 4bit --samples 5   # também funciona sozinha
 ```
 
 ## Configuração
@@ -42,7 +45,7 @@ Precedência, do menor para o maior peso:
 | `base_model_id` | `epfl-llm/meditron-7B` | Modelo base sobre o qual o adapter é aplicado. |
 | `cache_dir` | `finetuning/cache` se existir | Evita rebaixar os ~13 GB do modelo base. |
 | `device` | `auto` | `auto` \| `cuda` \| `cpu`. |
-| `quantization` | `auto` | `auto` \| `4bit` \| `8bit` \| `none`. Em `auto`: 4-bit se a GPU tem menos de 16 GB, fp16 se tem mais, fp32 em CPU. |
+| `quantization` | — | **Obrigatório.** `4bit` \| `8bit` \| `none`. Sem padrão: defina por flag, por `EVAL_QUANTIZATION` ou no JSON. Rebaixado para `none` só quando é impossível aplicar (sem GPU ou sem bitsandbytes), e o rebaixamento é registrado. |
 | `samples` | `10` | Perguntas do MedQuAD na bateria `model` (mais 3 sondas clínicas fixas). |
 | `max_new_tokens` | `256` | Teto de tokens por resposta. |
 | `seed` | `74` | A mesma do treino; a amostra e a geração são determinísticas. |
@@ -64,7 +67,7 @@ Exemplo de `eval/eval_config.json`:
 Equivalente por variável de ambiente ou flag:
 
 ```bash
-EVAL_SAMPLES=25 python run_eval.py
+EVAL_SAMPLES=25 EVAL_QUANTIZATION=none python run_eval.py
 python run_eval.py --samples 25 --quantization none --retriever openai
 ```
 
@@ -72,7 +75,8 @@ python run_eval.py --samples 25 --quantization none --retriever openai
 
 `eval/model_runner.py` concentra as decisões:
 
-- escolhe a quantização pela VRAM disponível (4-bit usa a mesma `BitsAndBytesConfig` do treino);
+- aplica a quantização escolhida (4-bit usa a mesma `BitsAndBytesConfig` do treino) e só a
+  rebaixa para `none` quando é impossível aplicá-la — sem GPU ou sem bitsandbytes;
 - em caso de *out of memory* na geração, corta `max_new_tokens` pela metade e tenta de novo;
 - sem GPU, roda em CPU (bem mais lento) — a suíte avisa antes de começar.
 

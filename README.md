@@ -23,8 +23,9 @@ pip install -r requirements.txt
 # .env na raiz do repositório
 #   OPENAI_API_KEY=...     embeddings dos protocolos
 #   HF_TOKEN=...           login não interativo no Hugging Face
+#   MODEL_QUANTIZATION=... 4bit, 8bit ou none (obrigatório)
 
-python run_ui.py          # abre o chat em http://127.0.0.1:8000
+python run_ui.py --quantization 4bit   # abre o chat em http://127.0.0.1:8000
 ```
 
 Para utilizar CUDA, é necessário o torch compilado com suporte a CUDA
@@ -84,7 +85,7 @@ Interface de chat para conversar com o modelo ajustado usando exatamente o mesmo
 mostra, em tempo real, por quais nós o pipeline passou.
 
 ```bash
-python run_ui.py            # http://127.0.0.1:8000
+python run_ui.py --quantization 4bit    # http://127.0.0.1:8000
 ```
 
 Opções: `--host`, `--port`, `--no-browser` (não abrir o navegador), `--reload` (recarregar ao
@@ -92,15 +93,14 @@ alterar o código, útil no desenvolvimento) e `--quantization`.
 
 #### Escolhendo como o modelo é carregado
 
-O modelo tem 7 bilhões de parâmetros, e quanto de VRAM ele ocupa é decisão de quem executa a
-aplicação:
+O modelo tem 7 bilhões de parâmetros, e quanto de VRAM ele ocupa é **decisão obrigatória** de
+quem executa a aplicação — não há padrão nem escolha automática:
 
 | Modo | VRAM | Quando usar |
 | --- | --- | --- |
 | `4bit` | ~4 GB | GPUs de 6–8 GB. Usa `nf4`, a mesma configuração do treino. |
 | `8bit` | ~7 GB | GPUs intermediárias, meio-termo entre memória e fidelidade. |
 | `none` | ~13,5 GB | fp16, sem quantização — para GPUs de 16 GB ou mais. |
-| `auto` | — | **Padrão**: escolhe `none` a partir de 16 GB de VRAM, senão `4bit`. |
 
 ```bash
 python run_ui.py --quantization 4bit     # tem precedência sobre o .env
@@ -113,9 +113,12 @@ Ou fixe no `.env`, para valer também no notebook e em qualquer script que impor
 MODEL_QUANTIZATION=4bit
 ```
 
-> Em fp16 numa GPU pequena o modelo chega a "carregar" — o driver transborda para a memória
-> compartilhada — e só falha com *out of memory* ao gerar a primeira resposta. É por isso que
-> o padrão é `auto` em vez de fp16.
+Sem a flag e sem a variável, o `run_ui.py` sai com erro antes de subir o servidor, e
+`src/model_loading.py` levanta `ValueError` antes de baixar qualquer coisa.
+
+> A escolha é obrigatória porque um palpite silencioso é pior do que uma decisão explícita:
+> em fp16 numa GPU pequena o modelo chega a "carregar" — o driver transborda para a memória
+> compartilhada — e só falha com *out of memory* ao gerar a primeira resposta.
 
 | Módulo | Conteúdo |
 | --- | --- |
@@ -161,11 +164,12 @@ relativos a ela.
 
 ### Avaliação — `run_eval.py` e `eval/`
 
-Suíte que mede o modelo ajustado e o pipeline, com detecção automática de hardware:
+Suíte que mede o modelo ajustado e o pipeline, com detecção automática de hardware. A
+quantização também é obrigatória aqui:
 
 ```bash
-python run_eval.py --check    # diagnóstico do ambiente, sem executar nada
-python run_eval.py            # as três baterias
+python run_eval.py --quantization 4bit --check   # diagnóstico do ambiente, sem executar nada
+python run_eval.py --quantization 4bit           # as três baterias
 ```
 
 São três baterias: `pipeline` (grafo determinístico, sem LLM, segundos), `model` (qualidade
@@ -204,8 +208,9 @@ pip install -r requirements.txt
   embeddings dos protocolos.
 - **Token do Hugging Face**: `HF_TOKEN` no `.env` para login não interativo — obrigatório ao
   rodar a interface web, opcional no notebook.
-- **Quantização** (opcional): `MODEL_QUANTIZATION` no `.env` (`auto`, `4bit`, `8bit` ou
-  `none`) define quanta VRAM o modelo ocupa; ver a tabela na seção da interface web.
+- **Quantização** (obrigatória): `MODEL_QUANTIZATION` no `.env` (`4bit`, `8bit` ou `none`),
+  ou a flag `--quantization`, define quanta VRAM o modelo ocupa; ver a tabela na seção da
+  interface web. Não há padrão — sem essa escolha a aplicação não sobe.
 - **FAISS**: `requirements.txt` traz `faiss-cpu`, que tem wheels para Windows; o notebook
   instala `faiss-gpu`, adequado ao ambiente do Colab.
 - **GPU**: opcional para o pipeline (o modelo roda em CPU, porém lentamente) e praticamente
