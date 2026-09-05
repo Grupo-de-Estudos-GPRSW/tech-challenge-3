@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pipeline:
+    name: Pipeline sem GPU
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      EVAL_OUTPUT_DIR: ${{ runner.temp }}/eval-results
+      PYTHONUTF8: "1"
+
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v6
+
+      - name: Configurar Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependências dos testes rápidos
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install langgraph fastapi httpx python-dotenv
+
+      - name: Verificar sintaxe Python
+        run: |
+          python -m compileall -q src webapp eval finetuning run_ui.py run_eval.py
+
+      - name: Executar testes do pipeline
+        run: python -m eval.battery_pipeline
+
+      - name: Publicar resultado da avaliação
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: resultado-pipeline
+          path: ${{ runner.temp }}/eval-results/*.json
+          if-no-files-found: warn
+          retention-days: 14
