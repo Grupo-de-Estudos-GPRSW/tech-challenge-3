@@ -15,6 +15,15 @@ para criar um chatbot médico que auxilia profissionais de saúde. São três pa
 A avaliação do modelo e do pipeline está no **[RELATORIO.md](RELATORIO.md)**, gerado a partir
 da suíte de testes em [`eval/`](eval/README.md) (`python run_eval.py`).
 
+## CI/CD
+
+Os workflows do GitHub Actions verificam a sintaxe e executam a bateria do pipeline
+sem GPU. Após essa validação, o fluxo de entrega disponibiliza um pacote do commit
+avaliado para download; a implantação em servidor ainda não está configurada.
+
+Veja a [documentação de CI/CD](docs/ci-cd.md) para configuração, reprodução dos testes,
+dependências, limitações e evidências.
+
 ## Início rápido
 
 ```bash
