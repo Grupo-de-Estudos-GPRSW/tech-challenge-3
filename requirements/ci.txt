@@ -1,0 +1,8 @@
+# Dependencias diretas da bateria pipeline (sem modelo, GPU ou credenciais).
+# Versoes observadas no ambiente Windows/Python 3.13.12.
+# O workflow valida a instalacao em Linux/Python 3.11.
+# Nao e um lock completo: dependencias transitivas ainda sao resolvidas pelo pip.
+langgraph==1.2.11
+fastapi==0.141.1
+httpx==0.28.1
+python-dotenv==1.2.3

@@ -5,6 +5,7 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: read
@@ -12,11 +13,11 @@ permissions:
 jobs:
   pipeline:
     name: Pipeline sem GPU
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
 
     env:
-      EVAL_OUTPUT_DIR: ${{ github.workspace }}/eval-results
+      EVAL_OUTPUT_DIR: ${{ runner.temp }}/eval-results
       PYTHONUTF8: "1"
 
     steps:
@@ -27,11 +28,13 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements/ci.txt
 
       - name: Instalar dependências dos testes rápidos
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install langgraph fastapi httpx python-dotenv
+          python -m pip install -r requirements/ci.txt
+          python -m pip check
 
       - name: Verificar sintaxe Python
         run: |
@@ -40,11 +43,19 @@ jobs:
       - name: Executar testes do pipeline
         run: python -m eval.battery_pipeline
 
+      - name: Registrar ambiente efetivo
+        if: always()
+        run: |
+          mkdir -p "$EVAL_OUTPUT_DIR"
+          python -VV > "$EVAL_OUTPUT_DIR/python.txt"
+          python -m pip freeze > "$EVAL_OUTPUT_DIR/dependencias.txt"
+          git rev-parse HEAD > "$EVAL_OUTPUT_DIR/commit.txt"
+
       - name: Publicar resultado da avaliação
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: resultado-pipeline
-          path: ${{ github.workspace }}/eval-results/*.json
+          path: ${{ runner.temp }}/eval-results/
           if-no-files-found: warn
           retention-days: 14

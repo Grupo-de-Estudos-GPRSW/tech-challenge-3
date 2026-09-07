@@ -1,0 +1,43 @@
+name: CD - pacote academico
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validar:
+    uses: ./.github/workflows/ci.yml
+
+  empacotar:
+    name: Preparar entrega academica
+    needs: validar
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Baixar o mesmo commit validado
+        uses: actions/checkout@v6
+
+      - name: Gerar pacote e identificacao
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/entrega"
+          git archive --format=zip --output="$RUNNER_TEMP/entrega/projeto.zip" HEAD \
+            src webapp eval finetuning run_ui.py run_eval.py requirements.txt \
+            requirements docs README.md RELATORIO.md example_notebook.ipynb \
+            .github/workflows
+          git rev-parse HEAD > "$RUNNER_TEMP/entrega/commit.txt"
+          cd "$RUNNER_TEMP/entrega"
+          sha256sum projeto.zip > SHA256SUMS.txt
+
+      - name: Disponibilizar pacote para download
+        uses: actions/upload-artifact@v4
+        with:
+          name: entrega-${{ github.sha }}
+          path: ${{ runner.temp }}/entrega/
+          if-no-files-found: error
+          retention-days: 30
