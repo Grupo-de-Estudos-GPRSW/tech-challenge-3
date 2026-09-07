@@ -17,10 +17,13 @@ jobs:
     timeout-minutes: 15
 
     env:
-      EVAL_OUTPUT_DIR: ${{ runner.temp }}/eval-results
       PYTHONUTF8: "1"
 
     steps:
+      - name: Configurar diretório dos resultados
+        shell: bash
+        run: echo "EVAL_OUTPUT_DIR=$RUNNER_TEMP/eval-results" >> "$GITHUB_ENV"
+
       - name: Baixar o código
         uses: actions/checkout@v6
 
