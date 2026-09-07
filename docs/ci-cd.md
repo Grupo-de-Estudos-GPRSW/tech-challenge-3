@@ -20,7 +20,7 @@ workflows. Esta é uma primeira etapa de entrega, não um deploy completo.
 1. Envie esses arquivos em uma branch e abra um pull request para `main`.
 2. Em **Actions**, acompanhe o workflow **CI**. O runner usa Ubuntu 24.04 e Python 3.11.
 3. Exija o check **Pipeline sem GPU** na proteção de `main`, após a primeira execução.
-4. Revise e faça o merge. O workflow **CD - pacote academico** executará o CI novamente
+4. Revise e faça o merge. O workflow **CD** executará o CI novamente
    para o commit da entrega e, se aprovado, disponibilizará o pacote.
 5. Na execução, baixe `resultado-pipeline` (retenção de 14 dias) e
    `entrega-<SHA>` (retenção de 30 dias). Preserve as evidências fora do Actions antes
@@ -121,7 +121,7 @@ Não inclui a `.venv`, o `.env` da raiz, logs locais ou o diretório `.git`.
 Não adicione segredos, caches ou pesos aos diretórios versionados incluídos no pacote.
 
 Os JSONs em `eval/results/` dentro do pacote são históricos. A evidência da execução
-atual é o artefato **resultado-pipeline**, que deve acompanhar o pacote acadêmico.
+atual é o artefato **resultado-pipeline**, que deve acompanhar o pacote.
 O ZIP não contém ambiente pronto, pesos ou comprovação de inferência em GPU.
 
 Para conferir integridade em Linux: `sha256sum -c SHA256SUMS.txt`.
