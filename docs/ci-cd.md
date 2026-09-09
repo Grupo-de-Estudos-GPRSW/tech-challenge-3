@@ -15,6 +15,40 @@ workflows. Esta é uma primeira etapa de entrega, não um deploy completo.
 | `requirements/ci.txt` | Versões diretas para a bateria rápida. |
 | `requirements/gpu.txt` | Candidato de dependências para execução/avaliação e treinamento. |
 
+## Estado atual e evidências de execução
+
+O projeto implementa integração contínua por meio de verificações automáticas de
+dependências, sintaxe e testes do pipeline sem GPU. Após a validação na branch
+principal, a automação prepara e disponibiliza um pacote associado ao commit,
+acompanhado de checksum SHA-256 para verificação de integridade. As execuções
+bem-sucedidas e os artefatos gerados demonstram o funcionamento desse fluxo.
+A implantação automática em servidor está fora do escopo implementado.
+
+Conforme o acompanhamento das execuções informado pela equipe:
+
+| Componente | Status |
+| --- | --- |
+| CI configurado e executando automaticamente | Concluído. |
+| Python/dependências e verificação de sintaxe | Configurados e validados pelo CI. |
+| Testes do pipeline sem GPU | Executados com sucesso na `main`. |
+| Resultados dos testes como artefato | Disponíveis. |
+| CD acionado na `main` e condicionado à validação | Implementado. |
+| Preparação da entrega e vínculo ao commit | Implementados. |
+| Checksum SHA-256 para integridade do pacote | Gerado. |
+| Execuções consecutivas bem-sucedidas | Confirmadas pela equipe. |
+| Deploy automático em servidor | Não implementado. |
+
+O artefato `resultado-pipeline` registra os testes da execução, a versão do Python,
+as dependências efetivas e o commit. O artefato `entrega-<SHA>` contém o pacote e sua
+identificação e integridade. Para a entrega acadêmica, preserve ambos junto aos
+links das execuções correspondentes e do commit/PR, conforme a seção
+[Evidências para a universidade](#evidências-para-a-universidade).
+
+Esse estado comprova o fluxo de CI e preparação da entrega no escopo informado;
+não representa implantação automática nem validação do modelo real em GPU.
+O arquivo de dependências GPU continua sendo um candidato a validação, e as
+dependências do CI ainda não constituem um lock completo.
+
 ## Ativar e acompanhar no GitHub
 
 1. Envie esses arquivos em uma branch e abra um pull request para `main`.

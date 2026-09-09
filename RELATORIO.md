@@ -528,7 +528,43 @@ aplicada em uma branch própria, fora do escopo deste relatório.
 
 ---
 
-## 9. Como reproduzir
+## 9. Integração contínua e preparação da entrega (CI/CD)
+
+O projeto implementa integração contínua por meio de verificações automáticas de
+dependências, sintaxe e testes do pipeline sem GPU. Após a validação na branch
+principal, a automação prepara e disponibiliza um pacote associado ao commit,
+acompanhado de checksum SHA-256 para verificação de integridade. As execuções
+bem-sucedidas e os artefatos gerados demonstram o funcionamento desse fluxo.
+A implantação automática em servidor está fora do escopo implementado.
+
+Conforme o acompanhamento das execuções informado pela equipe, o CI foi executado
+com sucesso na `main`, e o fluxo de entrega apresentou execuções consecutivas
+bem-sucedidas. O empacotamento depende da aprovação da validação do mesmo commit.
+
+| Componente | Situação atual |
+| --- | --- |
+| CI automático e configuração de Python/dependências | Implementados, com execução bem-sucedida na `main`. |
+| Verificação de sintaxe e testes do pipeline sem GPU | Executados no CI. |
+| Resultados dos testes | Disponibilizados como artefatos. |
+| Entrega acionada na `main` | Condicionada à aprovação do CI. |
+| Pacote versionado | Vinculado ao commit e acompanhado de checksum SHA-256. |
+| Execuções consecutivas | Bem-sucedidas, conforme acompanhamento da equipe. |
+| Deploy automático em servidor | Não implementado. |
+
+As evidências da automação são o artefato `resultado-pipeline`, com os resultados e
+o ambiente efetivo, e `entrega-<SHA>`, com `projeto.zip`, `commit.txt` e
+`SHA256SUMS.txt`. Esses resultados devem ser distinguidos dos JSONs históricos
+versionados em `eval/results/`, usados nas avaliações anteriores deste relatório.
+Os testes de CI usam substitutos para o modelo e o vectorstore; sua aprovação não
+comprova a execução do modelo real em GPU nem sua segurança clínica.
+
+O escopo acadêmico implementado é de **CI automatizado com empacotamento e
+disponibilização de artefatos**. Configurações, critérios de aprovação, retenção das
+evidências e etapas para evolução estão na [documentação de CI/CD](docs/ci-cd.md).
+
+---
+
+## 10. Como reproduzir
 
 ```bash
 pip install -r requirements.txt
