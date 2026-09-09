@@ -17,9 +17,12 @@ da suíte de testes em [`eval/`](eval/README.md) (`python run_eval.py`).
 
 ## CI/CD
 
-Os workflows do GitHub Actions verificam a sintaxe e executam a bateria do pipeline
-sem GPU. Após essa validação, o fluxo de entrega disponibiliza um pacote do commit
-avaliado para download; a implantação em servidor ainda não está configurada.
+O projeto implementa integração contínua no GitHub Actions com verificações de
+dependências, sintaxe e testes do pipeline sem GPU. Após a validação na `main`, a
+automação disponibiliza um pacote associado ao commit e acompanhado de checksum
+SHA-256 para verificação de integridade. O fluxo conta com execuções consecutivas
+bem-sucedidas e resultados publicados como artefatos. A implantação automática em
+servidor está fora do escopo implementado.
 
 Veja a [documentação de CI/CD](docs/ci-cd.md) para configuração, reprodução dos testes,
 dependências, limitações e evidências.

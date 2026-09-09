@@ -15,12 +15,46 @@ workflows. Esta é uma primeira etapa de entrega, não um deploy completo.
 | `requirements/ci.txt` | Versões diretas para a bateria rápida. |
 | `requirements/gpu.txt` | Candidato de dependências para execução/avaliação e treinamento. |
 
+## Estado atual e evidências de execução
+
+O projeto implementa integração contínua por meio de verificações automáticas de
+dependências, sintaxe e testes do pipeline sem GPU. Após a validação na branch
+principal, a automação prepara e disponibiliza um pacote associado ao commit,
+acompanhado de checksum SHA-256 para verificação de integridade. As execuções
+bem-sucedidas e os artefatos gerados demonstram o funcionamento desse fluxo.
+A implantação automática em servidor está fora do escopo implementado.
+
+Conforme o acompanhamento das execuções informado pela equipe:
+
+| Componente | Status |
+| --- | --- |
+| CI configurado e executando automaticamente | Concluído. |
+| Python/dependências e verificação de sintaxe | Configurados e validados pelo CI. |
+| Testes do pipeline sem GPU | Executados com sucesso na `main`. |
+| Resultados dos testes como artefato | Disponíveis. |
+| CD acionado na `main` e condicionado à validação | Implementado. |
+| Preparação da entrega e vínculo ao commit | Implementados. |
+| Checksum SHA-256 para integridade do pacote | Gerado. |
+| Execuções consecutivas bem-sucedidas | Confirmadas pela equipe. |
+| Deploy automático em servidor | Não implementado. |
+
+O artefato `resultado-pipeline` registra os testes da execução, a versão do Python,
+as dependências efetivas e o commit. O artefato `entrega-<SHA>` contém o pacote e sua
+identificação e integridade. Para a entrega acadêmica, preserve ambos junto aos
+links das execuções correspondentes e do commit/PR, conforme a seção
+[Evidências para a universidade](#evidências-para-a-universidade).
+
+Esse estado comprova o fluxo de CI e preparação da entrega no escopo informado;
+não representa implantação automática nem validação do modelo real em GPU.
+O arquivo de dependências GPU continua sendo um candidato a validação, e as
+dependências do CI ainda não constituem um lock completo.
+
 ## Ativar e acompanhar no GitHub
 
 1. Envie esses arquivos em uma branch e abra um pull request para `main`.
 2. Em **Actions**, acompanhe o workflow **CI**. O runner usa Ubuntu 24.04 e Python 3.11.
 3. Exija o check **Pipeline sem GPU** na proteção de `main`, após a primeira execução.
-4. Revise e faça o merge. O workflow **CD - pacote academico** executará o CI novamente
+4. Revise e faça o merge. O workflow **CD** executará o CI novamente
    para o commit da entrega e, se aprovado, disponibilizará o pacote.
 5. Na execução, baixe `resultado-pipeline` (retenção de 14 dias) e
    `entrega-<SHA>` (retenção de 30 dias). Preserve as evidências fora do Actions antes
@@ -121,7 +155,7 @@ Não inclui a `.venv`, o `.env` da raiz, logs locais ou o diretório `.git`.
 Não adicione segredos, caches ou pesos aos diretórios versionados incluídos no pacote.
 
 Os JSONs em `eval/results/` dentro do pacote são históricos. A evidência da execução
-atual é o artefato **resultado-pipeline**, que deve acompanhar o pacote acadêmico.
+atual é o artefato **resultado-pipeline**, que deve acompanhar o pacote.
 O ZIP não contém ambiente pronto, pesos ou comprovação de inferência em GPU.
 
 Para conferir integridade em Linux: `sha256sum -c SHA256SUMS.txt`.
