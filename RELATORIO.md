@@ -562,6 +562,16 @@ O escopo acadêmico implementado é de **CI automatizado com empacotamento e
 disponibilização de artefatos**. Configurações, critérios de aprovação, retenção das
 evidências e etapas para evolução estão na [documentação de CI/CD](docs/ci-cd.md).
 
+Os arquivos de `docs/evidencias/` estão descritos no
+[inventário das evidências de CI/CD](docs/evidencias/ci-cd/README.md). A captura
+do CD #4 mostra validação e empacotamento aprovados na `main`, em 30 segundos,
+para o commit `c0e2d87fcfeb8bdb65e03afb49cb24724320d0de`, além de quatro execuções
+consecutivas de CD aprovadas no histórico.
+
+O [resultado anexado](docs/evidencias/pipeline.json) registra a execução em
+`2026-09-09T01:38:47` (sem fuso indicado), usando Python 3.11.16 em Linux sem GPU:
+11 casos em 0,96 segundo, sendo 9 OK, 2 achados, nenhuma falha e nenhum erro.
+
 ---
 
 ## 10. Como reproduzir
