@@ -173,10 +173,10 @@ garante voltar ao mesmo modelo. Treinamento/publicação de modelos ficam separa
 
 ## Evidências para a universidade
 
-Inclua o link do commit/PR, link da execução Actions, relatório JSON atual, ambiente
-efetivo, pacote com checksum e explicação dos dois achados conhecidos. Diferencie
-testes locais, CI remoto aprovado e avaliação real com GPU; não apresente etapas
-pendentes como executadas.
+Os arquivos estão anexados diretamente em `docs/evidencias/`, com
+[inventário](evidencias/ci-cd/README.md). As capturas mostram CI aprovado
+e quatro execuções consecutivas de CD aprovadas. O CD #4 exibe o commit `c0e2d87`
+na `main`, consistente com `commit.txt`, e os jobs de validação e entrega aprovados.
 
 ## Referências
 

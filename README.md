@@ -27,6 +27,11 @@ servidor está fora do escopo implementado.
 Veja a [documentação de CI/CD](docs/ci-cd.md) para configuração, reprodução dos testes,
 dependências, limitações e evidências.
 
+As capturas de CI/CD, os resultados e os registros de ambiente, commit e checksum
+estão em `docs/evidencias/`. O
+[inventário das evidências](docs/evidencias/ci-cd/README.md) detalha os arquivos:
+a bateria anexada registra 9 casos OK, 2 achados e nenhuma falha ou erro.
+
 ## Início rápido
 
 ```bash
