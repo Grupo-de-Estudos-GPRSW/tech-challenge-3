@@ -3,15 +3,17 @@
   "base_model_id": "epfl-llm/meditron-7B",
   "cache_dir": null,
   "device": "auto",
-  "quantization": "auto",
+  "quantization": "none",
   "samples": 10,
   "max_new_tokens": 256,
   "seed": 74,
   "medquad_dir": "finetuning/MedQuAD",
   "output_dir": "eval/results",
-  "retriever": "openai",
+  "retriever": "auto",
   "batteries": [
+    "model",
+    "pipeline",
     "e2e"
   ],
-  "cache_dir_resolvido": "D:\\POSTECH\\tech-challenge-3\\finetuning\\cache"
+  "cache_dir_resolvido": "G:\\fiap\\tech-challenge-3\\finetuning\\cache"
 }
